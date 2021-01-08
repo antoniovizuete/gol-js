@@ -1,18 +1,25 @@
 // Import stylesheets
 import "./style.css";
 
-// Write Javascript code!
-const dimH = 100;
-const dimV = 100;
+const DIM = 100;
 
 const gridEl = document.getElementById("grid");
-gridEl.style.gridTemplateColumns = `repeat(${dimH}, 7px)`;
-gridEl.style.gridTemplateRow = `repeat(${dimV}, 7px)`;
+gridEl.style.width = `${DIM * 8}px`;
+gridEl.style.height = `${DIM * 8}px`;
+gridEl.style.gridTemplateColumns = `repeat(${DIM}, 7px)`;
+gridEl.style.gridTemplateRow = `repeat(${DIM}, 7px)`;
 
 let matrix = [];
-for (let x = 0; x < dimH; x++) {
+let paused = true;
+
+function onClick(e) {
+  const displayEl = document.getElementById("display");
+  displayEl.innerText = JSON.stringify(e, null, 2);
+}
+
+for (let x = 0; x < DIM; x++) {
   matrix[x] = [];
-  for (let y = 0; y < dimV; y++) {
+  for (let y = 0; y < DIM; y++) {
     matrix[x][y] = 0;
   }
 }
@@ -20,34 +27,33 @@ for (let x = 0; x < dimH; x++) {
 const setVal = (m, y, x, v) => (m[y][x] = v);
 const on = (y, x) => setVal(matrix, y, x, 1);
 
-on(3, 5)
+on(3, 5);
 on(4, 6);
 on(5, 4);
 on(5, 5);
 on(5, 6);
 
-for (let x = 0; x < dimH; x++) {
-  for (let y = 0; y < dimV; y++) {
+for (let x = 0; x < DIM; x++) {
+  for (let y = 0; y < DIM; y++) {
     const cellEl = document.createElement("div");
     cellEl.className = `cell ${matrix[y][x] ? "alive" : "dead"}`;
     cellEl.id = `${x}_${y}`;
+    cellEl.onclick = onClick;
     gridEl.appendChild(cellEl);
   }
 }
-
-let paused = true;
 
 setInterval(function() {
   if (paused) return;
 
   let newMatrix = JSON.parse(JSON.stringify(matrix));
 
-  for (let x = 0; x < dimH; x++) {
-    for (let y = 0; y < dimV; y++) {
-      const px = x === 0 ? dimH - 1 : x - 1;
-      const py = y === 0 ? dimV - 1 : y - 1;
-      const nx = x === dimH - 1 ? 0 : x + 1;
-      const ny = y === dimV - 1 ? 0 : y + 1;
+  for (let x = 0; x < DIM; x++) {
+    for (let y = 0; y < DIM; y++) {
+      const px = x === 0 ? DIM - 1 : x - 1;
+      const py = y === 0 ? DIM - 1 : y - 1;
+      const nx = x === DIM - 1 ? 0 : x + 1;
+      const ny = y === DIM - 1 ? 0 : y + 1;
 
       const neigh =
         matrix[px][py] +
@@ -67,10 +73,10 @@ setInterval(function() {
     }
   }
 
-  for (let i = 0; i < dimH * dimV; i++) {
+  for (let i = 0; i < DIM * DIM; i++) {
     const cellEl = gridEl.childNodes[i];
-    const x = Math.floor(i / dimH);
-    const y = i % dimV;
+    const x = Math.floor(i / DIM);
+    const y = i % DIM;
     cellEl.className = `cell ${newMatrix[y][x] ? "alive" : "dead"}`;
   }
   matrix = JSON.parse(JSON.stringify(newMatrix));
