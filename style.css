@@ -1,0 +1,31 @@
+h1,
+h2 {
+  font-family: Lato;
+  margin-bottom: 5px;
+}
+
+#grid {
+  display: grid;
+  background-color: #e4c651;
+  width: 800px;
+  height: 800px;
+  grid-template-columns: repeat(10, 7px);
+  grid-template-rows: repeat(10, 7px);
+  column-gap: 1px;
+  row-gap: 1px;
+  justify-items: stretch;
+  align-items: stretch;
+}
+.cell {
+  grid-column-start: auto;
+  grid-column-end: auto;
+  grid-row-start: auto;
+  grid-row-end: auto;
+}
+.cell.dead {
+  background-color: #e4c651;
+}
+
+.cell.alive {
+  background-color: #333;
+}
