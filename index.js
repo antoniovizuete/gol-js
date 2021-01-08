@@ -2,8 +2,8 @@
 import "./style.css";
 
 // Write Javascript code!
-const dimH = 10;
-const dimV = 10;
+const dimH = 100;
+const dimV = 100;
 
 const gridEl = document.getElementById("grid");
 gridEl.style.gridTemplateColumns = `repeat(${dimH}, 7px)`;
@@ -20,27 +20,17 @@ for (let x = 0; x < dimH; x++) {
 const setVal = (m, y, x, v) => (m[y][x] = v);
 const on = (y, x) => setVal(matrix, y, x, 1);
 
-on(3, 5);
+on(3, 5)
 on(4, 6);
 on(5, 4);
 on(5, 5);
 on(5, 6);
 
-/*on(10, 4);
-on(10, 6);
-on(11, 7);
-on(12, 7);
-on(13, 4);
-on(13, 7);
-on(14, 5);
-on(14, 6);
-on(14, 7);*/
-
 for (let x = 0; x < dimH; x++) {
   for (let y = 0; y < dimV; y++) {
     const cellEl = document.createElement("div");
     cellEl.className = `cell ${matrix[y][x] ? "alive" : "dead"}`;
-    cellEl.id = `cell${x * dimH + y}`;
+    cellEl.id = `${x}_${y}`;
     gridEl.appendChild(cellEl);
   }
 }

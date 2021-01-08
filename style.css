@@ -24,6 +24,7 @@ h2 {
 }
 .cell.dead {
   background-color: #e4c651;
+  transition: background ease-out;
 }
 
 .cell.alive {
