@@ -1,7 +1,5 @@
-h1,
-h2 {
+* {
   font-family: Lato;
-  margin-bottom: 5px;
 }
 
 #grid {
@@ -24,7 +22,7 @@ h2 {
 }
 .cell.dead {
   background-color: #e4c651;
-  transition: background ease-out;
+  transition: background 100ms;
 }
 
 .cell.alive {

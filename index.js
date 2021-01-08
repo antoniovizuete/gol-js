@@ -11,11 +11,10 @@ gridEl.style.gridTemplateRow = `repeat(${DIM}, 7px)`;
 
 let matrix = [];
 let paused = true;
+let generation = 1;
+let alive = 0;
 
-function onClick(e) {
-  const displayEl = document.getElementById("display");
-  displayEl.innerText = JSON.stringify(e, null, 2);
-}
+function onClick(e) {}
 
 for (let x = 0; x < DIM; x++) {
   matrix[x] = [];
@@ -27,11 +26,14 @@ for (let x = 0; x < DIM; x++) {
 const setVal = (m, y, x, v) => (m[y][x] = v);
 const on = (y, x) => setVal(matrix, y, x, 1);
 
-on(3, 5);
-on(4, 6);
-on(5, 4);
-on(5, 5);
-on(5, 6);
+on(23, 25);
+on(24, 26);
+on(25, 24);
+on(25, 25);
+on(25, 26);
+on(25, 27);
+on(26, 27);
+on(25, 28);
 
 for (let x = 0; x < DIM; x++) {
   for (let y = 0; y < DIM; y++) {
@@ -42,6 +44,9 @@ for (let x = 0; x < DIM; x++) {
     gridEl.appendChild(cellEl);
   }
 }
+
+alive = matrix.reduce((a, c) => a + c.reduce((a1, v) => a1 + v), 0);
+document.getElementById("monitor").innerText = `Alive: ${alive}`;
 
 setInterval(function() {
   if (paused) return;
@@ -80,8 +85,13 @@ setInterval(function() {
     cellEl.className = `cell ${newMatrix[y][x] ? "alive" : "dead"}`;
   }
   matrix = JSON.parse(JSON.stringify(newMatrix));
+  alive = matrix.reduce((a, c) => a + c.reduce((a1, v) => a1 + v), 0);
+  document.getElementById("monitor").innerText = `Alive: ${alive}`;
 }, 200);
 
 document.addEventListener("keypress", function(e) {
   paused = !paused;
+  document.getElementById("status").innerText = paused
+    ? "Press any key to resume"
+    : "Press any key to pause";
 });
