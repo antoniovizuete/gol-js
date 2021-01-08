@@ -23,6 +23,7 @@ h2 {
   grid-row-end: auto;
 }
 .cell.dead {
+  border: 1px solid #333;
   background-color: #e4c651;
 }
 
