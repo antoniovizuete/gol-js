@@ -69,10 +69,10 @@ setInterval(function() {
         matrix[x][ny] +
         matrix[nx][ny];
 
-      if (neigh === 3) {
-        newMatrix[x][y] = 1;
-      } else if (neigh < 2 || neigh > 3) {
+      if (neigh < 2 || neigh > 3) {
         newMatrix[x][y] = 0;
+      } else if (neigh === 3) {
+        newMatrix[x][y] = 1;
       }
     }
   }
