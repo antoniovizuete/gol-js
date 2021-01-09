@@ -104,3 +104,9 @@ document.addEventListener("keypress", function(e) {
     ? "Press any key to resume"
     : "Press any key to pause";
 });
+
+document
+.getElementById("start")
+.addEventListener("click", function(elses){
+  paused = false
+})
