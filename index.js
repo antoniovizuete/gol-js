@@ -14,8 +14,6 @@ let paused = true;
 let generation = 1;
 let alive = 0;
 
-function onClick(e) {}
-
 for (let x = 0; x < DIM; x++) {
   matrix[x] = [];
   for (let y = 0; y < DIM; y++) {
@@ -26,14 +24,25 @@ for (let x = 0; x < DIM; x++) {
 const setVal = (m, y, x, v) => (m[y][x] = v);
 const on = (y, x) => setVal(matrix, y, x, 1);
 
-on(23, 25);
-on(24, 26);
-on(25, 24);
-on(25, 25);
-on(25, 26);
-on(25, 27);
-on(26, 27);
-on(25, 28);
+function onClick(e) {
+  e = e || window.event;
+  const target = e.target || e.srcElement;
+
+  paused = true;
+  document.getElementById("status").innerText = "Press any key to resume";
+
+  const [x, y] = target.id.split("_").map(v => Number(v));
+  on(y, x);
+  for (let i = 0; i < DIM * DIM; i++) {
+    const cellEl = gridEl.childNodes[i];
+    const x = Math.floor(i / DIM);
+    const y = i % DIM;
+    cellEl.className = `cell ${matrix[y][x] ? "alive" : "dead"}`;
+  }
+
+  alive = matrix.reduce((a, c) => a + c.reduce((a1, v) => a1 + v), 0);
+  document.getElementById("monitor").innerText = `Alive: ${alive}`;
+}
 
 for (let x = 0; x < DIM; x++) {
   for (let y = 0; y < DIM; y++) {
